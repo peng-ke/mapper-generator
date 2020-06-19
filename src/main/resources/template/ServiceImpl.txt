@@ -1,0 +1,26 @@
+package ${pkgPath};
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.${companyName}.common.dao.BaseDao;
+import com.${companyName}.common.service.impl.BaseServiceImpl;
+import ${daoPath};
+import ${modelPath};
+import ${managerPath};
+
+@Service("${clzNameLC}Service")
+public class ${clzName}ServiceImpl extends BaseServiceImpl<${clzName}> implements ${clzName}Service {
+
+	private static final Logger logger = LoggerFactory.getLogger(${clzName}ServiceImpl.class);
+
+	@Autowired
+	private ${clzName}Dao ${clzNameLC}DaoImpl;
+	
+	@Override
+	public BaseDao<${clzName}> getBaseDao() {
+		return ${clzNameLC}DaoImpl;
+	}
+}

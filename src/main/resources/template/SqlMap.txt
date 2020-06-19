@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="${mapperPath}">
+
+	<resultMap id="result" type="${modelPath}">
+${resultMap}
+	</resultMap>
+
+	<sql id="base_field">
+${baseField}
+	</sql>
+	
+	<sql id="other-condition">
+${otherCondition}
+ 	</sql>
+
+	<select id="selectById" resultMap="result" parameterType="Long">
+		select
+		    <include refid="base_field" />
+		from ${tblName}  
+		where id = #{id}
+	</select>
+
+	<select id="selectByIds" resultMap="result" parameterType="List">
+		select
+		    <include refid="base_field" />
+		from ${tblName}  where id in
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</select>		
+
+	<select id="select" resultMap="result" parameterType="${modelPath}">
+		select
+		    <include refid="base_field" />
+		from ${tblName}
+		<where>
+            <include refid="base_field" />
+		</where>
+	</select>
+
+	<select id="selectAll" resultMap="result">
+		select
+		    <include refid="base_field" />
+		from ${tblName}
+	</select>
+
+	<insert id="insert" parameterType="${modelPath}" useGeneratedKeys="true" keyProperty="id">
+${insertStatement}
+	</insert>
+
+	<update id="update" parameterType="${modelPath}">
+${updateStatement}
+	</update>	
+	
+	<update id="update4Selective" parameterType="${modelPath}">
+${updateMapModel}
+	</update>	
+
+	<delete id="deleteById" parameterType="Long">
+		delete from ${tblName} where id = #{id}
+	</delete>	
+
+	<delete id="delete" parameterType="${modelPath}">
+		delete from ${tblName}
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<include refid="other-condition" />
+		</where>
+	</delete>	
+		
+</mapper>
+

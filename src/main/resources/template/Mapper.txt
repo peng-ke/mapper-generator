@@ -1,0 +1,74 @@
+package ${pkgPath};
+
+import ${modelPath};
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface ${clzName}Mapper {
+
+    /**
+     * 根据id,查询单个
+     * @param id
+     * @return
+     */
+    ${clzName} selectById(Long id);
+
+    /**
+     * 根据ids,查询对象
+     * @param ids
+     * @return
+     */
+    List<${clzName}> selectByIds(List<Long> ids);
+
+    /**
+     * 根据实体类的非空属性值查询对象
+     * @return	符合条件的对象列表
+     */
+	List<${clzName}> select(${clzName} param);
+
+    /**
+     * 查询所有记录
+     * @return
+     */
+    List<${clzName}> selectAll();
+
+    /**
+     * 插入单个对象
+     * @param model
+     * @return
+     */
+    int insert(${clzName} model);
+
+    /**
+     * 根据主键更新对象
+     * @param model
+     * @return
+     */
+    int update(${clzName} model);
+
+    /**
+     * 根据主键更新对象,如果o属性不为空,则更新,为空则不更新
+     * @param model
+     * @return
+     */
+    int update4Selective(${clzName} model);
+
+    /**
+     * 根据主键删除
+     * @param id
+     * @return
+     */
+    int deleteById(Long id);
+
+    /**
+     * 根据对象信息删除
+     * 例如,传入 对象 User, id=1,name=a , 则删除 id=1,name=a的记录
+     * 如果传入对象 User,name=a, 则删除 name=a的记录
+     * @param model
+     * @return
+     */
+    int delete(${clzName} model);
+
+}
+

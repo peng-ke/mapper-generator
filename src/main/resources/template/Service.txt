@@ -1,0 +1,8 @@
+package ${pkgPath};
+
+import com.${companyName}.common.service.BaseService;
+import ${modelPath};
+
+public interface ${clzName}Service extends BaseService<${clzName}> {
+
+}
