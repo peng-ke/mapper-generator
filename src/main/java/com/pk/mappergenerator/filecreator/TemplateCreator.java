@@ -32,7 +32,7 @@ public abstract class TemplateCreator {
         String templateName = getTemplateName();
         String template = TEMPLATE_PATH + templateName;
         // 读模板
-        String templateContent = FileUtil.readAsString(getClass().getClassLoader().getResource(template).getPath());
+        String templateContent = FileUtil.readAsString(getClass().getClassLoader().getResourceAsStream(template));
         // 替换模板表达式中的内容
         String content = replaceExpression(templateContent);
         // 获取要生成的文件的绝对路径
