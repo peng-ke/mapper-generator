@@ -77,7 +77,10 @@ public class TableInfo {
 			while (generalRS.next()) {
 				String columnName = generalRS.getString(Const.COLUMN_NAME);
 				String columnType = generalRS.getString(Const.TYPE_NAME);
-				String comment = generalRS.getString(Const.REMARKS);
+				String comment = null;
+				if (otherConfig.isPojoComment()) {
+					comment = generalRS.getString(Const.REMARKS);
+				}
 				DataInfo dataInfo = DataInfo.getDataInfo(columnName, columnType, comment, tableInfo.getParser());
 				tableInfo.addDataInfo(dataInfo);
 			}
@@ -101,6 +104,13 @@ public class TableInfo {
 		for (DataInfo dataInfo : dataInfos) {
 			if (dataInfo.getFieldName().equalsIgnoreCase(Const.ID))
 				continue;// id property is in the BaseModel
+			if (!StringUtils.isBlank(dataInfo.getComment())) {
+				sb.append(Const.TAB);
+				sb.append("/*  ");
+				sb.append(dataInfo.getComment());
+				sb.append("  */");
+			}
+			sb.append(Const.ENDL);
 			sb.append(Const.TAB);
 			sb.append("private ");
 			sb.append(dataInfo.getJavaType());
