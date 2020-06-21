@@ -18,6 +18,12 @@ public class Generator {
         if (StringUtils.isBlank(modelConfig.getPojoName())) {
             modelConfig.setPojoName(StringUtils.capitalize(Parser.getFildName(modelConfig.getTableName())));
         }
+        if (modelConfig == null) {
+            throw new IllegalArgumentException("modelConfig 不能为空！");
+        }
+        if (otherConfig == null) {
+            otherConfig = new OtherConfig();
+        }
         // 获取表信息
         TableInfo tableInfo = TableInfo.parseTable(databaseConfig, modelConfig.getTableName(), otherConfig);
 
@@ -28,5 +34,12 @@ public class Generator {
         creator.execute();
         mapperCreator.execute();
         xmlCreator.execute();
+
+        log.info("success!");
+    }
+
+    public static void generate(DatabaseConfig databaseConfig, ModelConfig modelConfig) {
+        OtherConfig otherConfig = new OtherConfig();
+        generate(databaseConfig, modelConfig, otherConfig);
     }
 }

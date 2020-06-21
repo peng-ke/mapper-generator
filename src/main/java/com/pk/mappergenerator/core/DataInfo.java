@@ -22,6 +22,7 @@ public class DataInfo {
 	public static DataInfo getDataInfo(String columnName, String columnType, String comment, Parser parser) {
 		String fildName = parser.getFildName(columnName);
 		String javaType = parser.getJavaType(columnType);
-		return new DataInfo(fildName, columnName, javaType, columnType, comment);
+		String jdbcType = parser.getMybatisType(columnType);
+		return new DataInfo(fildName, columnName, javaType, jdbcType, comment);
 	}
 }
