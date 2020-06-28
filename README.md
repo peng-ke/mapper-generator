@@ -45,3 +45,32 @@
 | useJava8Time | 是否使用 java8 的时间 API  |
 | pojoComment  | 实体类是否生成数据库的注释 |
 
+### 使用示例
+
+```java
+   public static void main(String[] args) {
+		
+        String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC";
+        String driver = "com.mysql.jdbc.Driver";
+        String password = "root";
+        String username = "root";
+        // 数据库配置
+        DatabaseConfig databaseConfig = new DatabaseConfig(url, driver, username, password);
+		// 生成的文件的配置
+        ModelConfig modelConfig = new ModelConfig();
+        modelConfig.setAbsolutePath("H:/workspace/idea_workspace/generator-test/");
+        modelConfig.setTableName("company_zxgs_line_copy1");
+        modelConfig.setPojoPackage("com.pk.test.generatortest.pojo");
+        // 如果不设置，默认为驼峰式
+		// modelConfig.setPojoName("ZxgsLine");
+        modelConfig.setMapperPackage("com.pk.test.generatortest.mapper");
+        modelConfig.setXmlPath("mapper");
+		// 其他配置
+        OtherConfig otherConfig = new OtherConfig();
+        otherConfig.setUseJava8Time(false);
+        otherConfig.setPojoComment(false);
+
+        Generator.generate(databaseConfig, modelConfig, otherConfig);
+    }
+```
+
