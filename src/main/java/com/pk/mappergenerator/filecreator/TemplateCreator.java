@@ -2,10 +2,10 @@ package com.pk.mappergenerator.filecreator;
 
 import com.pk.mappergenerator.util.Const;
 import com.pk.mappergenerator.util.FileUtil;
+import com.pk.mappergenerator.util.StringUtil;
 import java.io.File;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 public abstract class TemplateCreator {
@@ -44,7 +44,7 @@ public abstract class TemplateCreator {
 
     public String replaceExpression(String str, String key, String value) {
         String newKey = Const.EXPRESSION_LEFT + key + Const.EXPRESSION_RIGHT;
-        return StringUtils.replace(str, newKey, value);
+        return StringUtil.replace(str, newKey, value);
     }
 
     public abstract void update() throws IOException;

@@ -7,7 +7,7 @@ import com.pk.mappergenerator.core.TableInfo;
 import com.pk.mappergenerator.filecreator.MapperCreator;
 import com.pk.mappergenerator.filecreator.PojoCreator;
 import com.pk.mappergenerator.filecreator.XmlCreator;
-import com.pk.mappergenerator.parser.Parser;
+import com.pk.mappergenerator.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,7 +16,7 @@ public class Generator {
 
     public static void generate(DatabaseConfig databaseConfig, ModelConfig modelConfig, OtherConfig otherConfig) {
         if (StringUtils.isBlank(modelConfig.getPojoName())) {
-            modelConfig.setPojoName(StringUtils.capitalize(Parser.getFildName(modelConfig.getTableName())));
+            modelConfig.setPojoName(StringUtils.capitalize(StringUtil.getFildName(modelConfig.getTableName())));
         }
         if (modelConfig == null) {
             throw new IllegalArgumentException("modelConfig 不能为空！");

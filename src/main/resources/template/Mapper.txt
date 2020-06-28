@@ -41,6 +41,13 @@ public interface ${clzName}Mapper {
     int insert(${clzName} model);
 
     /**
+     * 批量插入对象
+     * @param list
+     * @return
+     */
+    int insertBatch(List<${clzName}> list);
+
+    /**
      * 根据主键更新对象
      * @param model
      * @return
@@ -62,13 +69,10 @@ public interface ${clzName}Mapper {
     int deleteById(Long id);
 
     /**
-     * 根据对象信息删除
-     * 例如,传入 对象 User, id=1,name=a , 则删除 id=1,name=a的记录
-     * 如果传入对象 User,name=a, 则删除 name=a的记录
-     * @param model
+     * 根据主键删除
+     * @param ids
      * @return
      */
-    int delete(${clzName} model);
-
+    int deleteByIds(List<Long> ids);
 }
 

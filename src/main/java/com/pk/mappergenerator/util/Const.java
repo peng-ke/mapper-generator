@@ -21,6 +21,7 @@ public class Const {
     public static final String OTHER_CONDITION = "otherCondition";
     public static final String TABLE_NAME = "tblName";
     public static final String INSERT_STATEMENT = "insertStatement";
+    public static final String INSERT_BATCH_STATEMENT = "insertBatchStatement";
     public static final String UPDATE_STATEMENT = "updateStatement";
     public static final String UPDATE_MAP_MODEL = "updateMapModel";
     public static final String CLASS_NAME = "clzName";

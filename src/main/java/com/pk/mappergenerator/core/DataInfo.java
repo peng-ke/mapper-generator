@@ -1,6 +1,7 @@
 package com.pk.mappergenerator.core;
 
 import com.pk.mappergenerator.parser.Parser;
+import com.pk.mappergenerator.util.StringUtil;
 import lombok.Data;
 
 @Data
@@ -20,7 +21,7 @@ public class DataInfo {
 	}
 
 	public static DataInfo getDataInfo(String columnName, String columnType, String comment, Parser parser) {
-		String fildName = parser.getFildName(columnName);
+		String fildName = StringUtil.getFildName(columnName);
 		String javaType = parser.getJavaType(columnType);
 		String jdbcType = parser.getMybatisType(columnType);
 		return new DataInfo(fildName, columnName, javaType, jdbcType, comment);

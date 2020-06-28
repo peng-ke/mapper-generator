@@ -36,7 +36,7 @@ ${otherCondition}
 		    <include refid="base_field" />
 		from ${tblName}
 		<where>
-            <include refid="base_field" />
+            <include refid="other-condition" />
 		</where>
 	</select>
 
@@ -48,6 +48,10 @@ ${otherCondition}
 
 	<insert id="insert" parameterType="${modelPath}" useGeneratedKeys="true" keyProperty="id">
 ${insertStatement}
+	</insert>
+
+	<insert id="insertBatch" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+${insertBatchStatement}
 	</insert>
 
 	<update id="update" parameterType="${modelPath}">
@@ -62,15 +66,11 @@ ${updateMapModel}
 		delete from ${tblName} where id = #{id}
 	</delete>	
 
-	<delete id="delete" parameterType="${modelPath}">
-		delete from ${tblName}
-		<where>
-			<if test="id != null">
-				id = #{id}
-			</if>
-			<include refid="other-condition" />
-		</where>
-	</delete>	
-		
+    <delete id="deleteByIds" parameterType="list">
+        delete from ${tblName} where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
 
