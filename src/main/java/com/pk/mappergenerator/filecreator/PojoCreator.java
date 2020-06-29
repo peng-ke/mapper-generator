@@ -58,7 +58,7 @@ public class PojoCreator extends TemplateCreator {
         }
 
         StringBuffer sb = new StringBuffer(Const.TAB);
-        sb.append("private Integer id;");
+        sb.append("private Long id;");
         sb.append(Const.ENDL);
         for (DataInfo dataInfo : dataInfos) {
             if (dataInfo.getFieldName().equalsIgnoreCase(Const.ID))
