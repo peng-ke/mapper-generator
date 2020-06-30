@@ -9,14 +9,14 @@ public class DataInfo {
 	private String fieldName;
 	private String columnName;
 	private String javaType;
-	private String jdbcType;
+	private String mybatisType;
 	private String comment;
 
-	private DataInfo(String fieldName, String columnName, String javaType, String jdbcType, String comment) {
+	private DataInfo(String fieldName, String columnName, String javaType, String mybatisType, String comment) {
 		this.fieldName = fieldName;
 		this.columnName = columnName;
 		this.javaType = javaType;
-		this.jdbcType = jdbcType;
+		this.mybatisType = mybatisType;
 		this.comment = comment;
 	}
 

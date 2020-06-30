@@ -26,7 +26,8 @@ public class Generator {
         }
         // 获取表信息
         TableInfo tableInfo = TableInfo.parseTable(databaseConfig, modelConfig.getTableName(), otherConfig);
-
+        if (tableInfo == null)
+            return;
         PojoCreator creator = new PojoCreator(tableInfo, modelConfig);
         MapperCreator mapperCreator = new MapperCreator(modelConfig);
         XmlCreator xmlCreator = new XmlCreator(tableInfo, modelConfig);

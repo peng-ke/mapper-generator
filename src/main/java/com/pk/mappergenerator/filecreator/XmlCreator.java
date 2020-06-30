@@ -29,8 +29,8 @@ public class XmlCreator extends TemplateCreator {
     public static final String OTHER_CONDITION_END = "</sql>";
     public static final String INSERT_START = "<insert id=\"insert\"";
     public static final String INSERT_END = "</insert>";
-    private static final String INSERT_BATCH_START = "<insert id=\"insertBatch\"";
-    private static final String INSERT_BATCH_END = "</insert>";
+    public static final String INSERT_BATCH_START = "<insert id=\"insertBatch\"";
+    public static final String INSERT_BATCH_END = "</insert>";
     public static final String UPDATE_START = "<update id=\"update\"";
     public static final String UPDATE_END = "</update>";
     public static final String UPDATE4SELECTIVE_START = "<update id=\"update4Selective\"";
@@ -55,7 +55,7 @@ public class XmlCreator extends TemplateCreator {
         String targetPath = getTargetPath();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(targetPath)))){
 
-            List<Node> replaceNodes = getXMLUpdateMappingList(tableInfo);
+            List<Node> replaceNodes = getXMLUpdateMappingList();
             boolean isNeedReplace = false;
             int mappingIndex = 0;
             String line = null;
@@ -142,7 +142,7 @@ public class XmlCreator extends TemplateCreator {
         return "SqlMap.txt";
     }
 
-    private List<Node> getXMLUpdateMappingList(TableInfo tableInfo){
+    private List<Node> getXMLUpdateMappingList(){
         List<Node> list = new ArrayList<>();
         list.add(new Node(RESULTMAP_START, RESULTMAP_END, this.getResultMap()));
         list.add(new Node(BASE_FIELD_START, BASE_FIELD_END, Const.TAB2 + this.getColumnNames()));
@@ -158,12 +158,14 @@ public class XmlCreator extends TemplateCreator {
         StringBuilder sb = new StringBuilder();
         sb.append(Const.TAB2);
         sb.append("insert into ");
-        sb.append(tableInfo.getName());
+        sb.append(tableInfo.getTableName());
         sb.append("( <include refid=\"base_field\" /> )");
         sb.append(Const.ENDL);
         sb.append(Const.TAB2);
         sb.append("values (");
-        sb.append("#{id}, ");
+        sb.append("#{");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append("}, ");
         for (DataInfo dataInfo : tableInfo.getDataInfos()) {
             sb.append("#{");
             sb.append(dataInfo.getFieldName());
@@ -190,7 +192,7 @@ public class XmlCreator extends TemplateCreator {
         StringBuilder sb = new StringBuilder();
         sb.append(Const.TAB2);
         sb.append("update ");
-        sb.append(tableInfo.getName());
+        sb.append(tableInfo.getTableName());
         sb.append(" set ");
         for (DataInfo dataInfo : tableInfo.getDataInfos()) {
             sb.append(dataInfo.getColumnName());
@@ -201,18 +203,24 @@ public class XmlCreator extends TemplateCreator {
         StringUtil.deleteLastStr(sb, 2);
         sb.append(" where ");
         sb.append(tableInfo.getPrimaryKey());
-        sb.append("=#{id}");
+        sb.append("=#{");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append("}");
         return sb.toString();
     }
 
     public String getResultMap() {
         StringBuilder sb = new StringBuilder();
         sb.append(Const.TAB2);
-        sb.append("<id property=\"id\"");
+        sb.append("<id property=\"");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append("\"");
         sb.append(" column=\"");
         sb.append(tableInfo.getPrimaryKey());
         sb.append("\"");
-        sb.append(" jdbcType=\"BIGINT\" />");
+        sb.append(" jdbcType=\"");
+        sb.append(tableInfo.getPrimaryMybatisType());
+        sb.append("\" />");
         sb.append(Const.ENDL);
         for (DataInfo dataInfo : tableInfo.getDataInfos()) {
             sb.append(Const.TAB2);
@@ -222,7 +230,7 @@ public class XmlCreator extends TemplateCreator {
             sb.append(dataInfo.getColumnName());
             sb.append("\"");
             sb.append(" jdbcType=\"");
-            sb.append(dataInfo.getJdbcType());
+            sb.append(dataInfo.getMybatisType());
             sb.append("\"");
             sb.append("/>");
             sb.append(Const.ENDL);
@@ -254,7 +262,7 @@ public class XmlCreator extends TemplateCreator {
         StringBuilder sb = new StringBuilder();
         sb.append(Const.TAB2);
         sb.append("update ");
-        sb.append(tableInfo.getName());
+        sb.append(tableInfo.getTableName());
         sb.append(Const.ENDL);
         sb.append(Const.TAB2);
         sb.append("<set>");
@@ -281,7 +289,9 @@ public class XmlCreator extends TemplateCreator {
         sb.append(Const.TAB2);
         sb.append(" where ");
         sb.append(tableInfo.getPrimaryKey());
-        sb.append("=#{id}");
+        sb.append("=#{");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append("}");
         return sb.toString();
     }
 
@@ -289,7 +299,7 @@ public class XmlCreator extends TemplateCreator {
         StringBuilder sb = new StringBuilder();
         sb.append(Const.TAB2);
         sb.append("insert into ");
-        sb.append(tableInfo.getName());
+        sb.append(tableInfo.getTableName());
         sb.append("( <include refid=\"base_field\" /> )");
         sb.append(Const.ENDL);
         sb.append(Const.TAB2);
@@ -300,6 +310,9 @@ public class XmlCreator extends TemplateCreator {
         sb.append(Const.ENDL);
         sb.append(Const.TAB3);
         sb.append("(");
+        sb.append("#{item.");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append("}, ");
         int i = 0;
         for (DataInfo dataInfo : tableInfo.getDataInfos()) {
             sb.append("#{item.");

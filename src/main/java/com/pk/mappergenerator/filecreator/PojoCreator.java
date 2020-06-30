@@ -58,8 +58,13 @@ public class PojoCreator extends TemplateCreator {
         }
 
         StringBuffer sb = new StringBuffer(Const.TAB);
-        sb.append("private Long id;");
+        sb.append("private ");
+        sb.append(tableInfo.getPrimaryJavaType());
+        sb.append(" ");
+        sb.append(tableInfo.getPrimaryJavaField());
+        sb.append(";");
         sb.append(Const.ENDL);
+
         for (DataInfo dataInfo : dataInfos) {
             if (dataInfo.getFieldName().equalsIgnoreCase(Const.ID))
                 continue;// id property is in the BaseModel
