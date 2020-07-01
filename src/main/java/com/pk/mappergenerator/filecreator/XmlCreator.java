@@ -133,6 +133,8 @@ public class XmlCreator extends TemplateCreator {
         content = super.replaceExpression(content, Const.INSERT_BATCH_STATEMENT, this.getInsertBatchStatement());
         content = super.replaceExpression(content, Const.UPDATE_STATEMENT, this.getUpdateStatement());
         content = super.replaceExpression(content, Const.UPDATE_MAP_MODEL, this.getUpdateMapModel());
+        content = super.replaceExpression(content, Const.PRIMARY_COLUMN, tableInfo.getPrimaryKey());
+        content = super.replaceExpression(content, Const.PRIMARY_FIELD, tableInfo.getPrimaryJavaField());
 
         return content;
     }
@@ -203,7 +205,7 @@ public class XmlCreator extends TemplateCreator {
         StringUtil.deleteLastStr(sb, 2);
         sb.append(" where ");
         sb.append(tableInfo.getPrimaryKey());
-        sb.append("=#{");
+        sb.append(" = #{");
         sb.append(tableInfo.getPrimaryJavaField());
         sb.append("}");
         return sb.toString();
@@ -283,13 +285,15 @@ public class XmlCreator extends TemplateCreator {
             sb.append("</if>");
             sb.append(Const.ENDL);
         }
+        int i = sb.lastIndexOf(",");
+        sb.deleteCharAt(i);
         sb.append(Const.TAB2);
         sb.append("</set>");
         sb.append(Const.ENDL);
         sb.append(Const.TAB2);
         sb.append(" where ");
         sb.append(tableInfo.getPrimaryKey());
-        sb.append("=#{");
+        sb.append(" = #{");
         sb.append(tableInfo.getPrimaryJavaField());
         sb.append("}");
         return sb.toString();

@@ -19,15 +19,15 @@ ${otherCondition}
 		select
 		    <include refid="base_field" />
 		from ${tblName}  
-		where id = #{id}
+		where ${primaryColumn} = #{${primaryField}}
 	</select>
 
 	<select id="selectByIds" resultMap="result" parameterType="List">
 		select
 		    <include refid="base_field" />
 		from ${tblName}  where id in
-		<foreach collection="list" item="item" open="(" close=")" separator=",">
-            #{item}
+		<foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
         </foreach>
 	</select>		
 
@@ -63,7 +63,7 @@ ${updateMapModel}
 	</update>	
 
 	<delete id="deleteById" parameterType="Long">
-		delete from ${tblName} where id = #{id}
+		delete from ${tblName} where ${primaryColumn} = #{${primaryField}}
 	</delete>	
 
     <delete id="deleteByIds" parameterType="list">

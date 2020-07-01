@@ -66,8 +66,6 @@ public class PojoCreator extends TemplateCreator {
         sb.append(Const.ENDL);
 
         for (DataInfo dataInfo : dataInfos) {
-            if (dataInfo.getFieldName().equalsIgnoreCase(Const.ID))
-                continue;// id property is in the BaseModel
             if (!StringUtil.isBlank(dataInfo.getComment())) {
                 sb.append(Const.TAB);
                 sb.append("/*  ");

@@ -2,14 +2,16 @@ package com.pk.mappergenerator.util;
 
 public class Const {
 
+
+    public static final String MYSQL = "mysql";
     public static final String ID = "id";
     public static final String NULLABLE = "NULLABLE";
     public static final String DECIMAL_DIGITS = "DECIMAL_DIGITS";
     public static final String COLUMN_SIZE = "COLUMN_SIZE";
     public static final String TYPE_NAME = "TYPE_NAME";
-    public static final String MYSQL = "mysql";
     public static final String COLUMN_NAME = "COLUMN_NAME";
     public static final String REMARKS = "REMARKS";
+
     public static final String EXPRESSION_LEFT = "${";
     public static final String EXPRESSION_RIGHT = "}";
 
@@ -24,8 +26,11 @@ public class Const {
     public static final String INSERT_BATCH_STATEMENT = "insertBatchStatement";
     public static final String UPDATE_STATEMENT = "updateStatement";
     public static final String UPDATE_MAP_MODEL = "updateMapModel";
+
     public static final String CLASS_NAME = "clzName";
     public static final String FIELDS = "fieldsDeclareInfo";
+    public static final String PRIMARY_COLUMN = "primaryColumn";
+    public static final String PRIMARY_FIELD = "primaryField";
 
     public static final String JAVA_SUFFIX = ".java";
     public static final String XML_SUFFIX = ".xml";
